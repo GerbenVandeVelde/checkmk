@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  checkmk:
+    image: checkmk/check-mk-raw:latest
+    container_name: checkmk
+    ports:
+      - "5000:5000"
+    volumes:
+      - checkmk_data:/omd/sites
+      - /var/checkmk/notifications:/opt/omd/sites/cmk/local/share/check_mk/notifications
+      - /var/checkmk/tmp_bind:/tmp/
+    environment:
+      - CMK_PASSWORD=${CMK_PASSWORD}
+      - SITE_ID=${my_checkmk_site}
+    restart: always
+
+volumes:
+  checkmk_data:
